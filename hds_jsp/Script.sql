@@ -1,0 +1,13 @@
+CREATE SEQUENCE SEQU_USER;
+
+CREATE TABLE TAB_USER(
+	PRIMARY KEY UserID VARCHAR(20),
+	UserPassword VARCHAR(20),
+	UserName VARCHAR(20),
+	UserGender VARCHAR(20),
+	UserEmail VARCHAR(50)
+	);
+
+INSERT INTO TAB_USER VALUES('gildong', '123456', 'È«±æµ¿', '³²ÀÚ', 'gildong@naver.com');
+
+SELECT * FROM TAB_USER;
