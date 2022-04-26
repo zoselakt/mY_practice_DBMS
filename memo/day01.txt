@@ -1,0 +1,26 @@
+DBMS(Database Management System)
+- 계정관리 로그인 sqlplus sys as sysdba > 비밀번호입력
+- 일반계정 로그인 sqlplus hr/hr - hr/ht은 아이디/비밀번호
+
+- 비밀번호 변경 
+ sqlplus sys as sysdba > alter user system identified by 1234;
+- 계정변경
+ conn system / 1234 (비밀번호)ㄴ
+- 계정확인 
+ show user
+
+오라클 DBMS 버전
+oracle 11g 
+i: internet
+g: grid
+c: cloud
+
+계정
+sys: 모든권한
+system: 계정 관리
+일반 계정: 해당 스키마 관리(hr, op, he scott....) 
+	스키마: 정리가 잘 되어 있는 표들의 묶음, 상태
+
+RDBMS(relation DBMS) 관계형 데이터 베이스 시스템
+
+

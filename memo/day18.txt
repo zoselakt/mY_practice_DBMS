@@ -1,0 +1,39 @@
+DCL (Data Control Language) 
+데이터 제어어 / 데이터 무결성, 보안, 권한 제어, 회복 등 수행하기 위한 DBMS 제어 수행 언어
+순서
+계정생성 -> 테이블 스페이스 -> 기본계정과 연동 -> 권한 부여 -> 권한 DDL, DCL 등 사용
+
+-GRANT: 데이터베이스 사용자에게 특정 작업에 대한 수행 권한 부여할 수 있는 권한 / 권한 부여
+권한부여
+GRANT [권한] ON [DB].[TABLE] TO [유저_ID]@[호스트];
+
+사용자 등록 및 권한부여
+GRANT [권한] ON [DB].[TABLE] TO [유저_ID]@[호스트] IDENTIFIED BY '비밀번호';
+
+권한 확인
+SHOW GRANTS FOR [유저_ID]@[호스트];
+
+-REVOKE: 데이터베이스 사용자에게 특정 작업에 대한 수행 권한을 박탈, 회수할 수 있는 권한 / 권한 박탈
+REVOKE [권한] ON [DB].[TABLE] FROM [유저_ID]@[호스트]
+
+- COMMIT: 트랜잭션의 작업이 정상적으로 완료할 수 있는 권한 / 데이터베이스의 작업한 결과를 물리적 디스크로 저장하고, 작업이 정상적으로 완료시키는 명령어이다.
+COMMIT;
+
+-ROLLBACK 트랜잭션의 작업이 비정상적으로 종료되었을 때 원래의 상태로 복구할 수 있는 권한 / COMMIT 명령어를 사용하기 이전의 상태만 ROLLBACK 가능
+ROLLBACK;
+
+ROLE: 권한이 뭉쳐있는 상태 / 한번에 여러권한부여
+CONNECT, RESOURCE, DBA
+GRANT 권한명(ROLE이름), 권한명2 ... TO 계정명
+GRANT SELECT ON PLAYER TO 받을계정명;
+
+REVOKE 권한명(ROLE이름) FROM 계정명
+
+SCOTT 계정 SALGRADE테이블을 복사한후 GRADE 컬럼명을 LEVEL 로 변경, 값을 반대로 바꾸기
+CREATE TABLE SALGRADE AS SELECT * FROM SCOTT.SALGRADE;  -- SCOTT계정 SALGRADE 테이블
+SELECT * FROM SALGRADE;
+
+ALTER TABLE SALGRADE RENAME COLUMN GRADE TO "LEVEL";  -- 컬럼명 변경
+UPDATE SALGRADE
+SET "LEVEL" = 6  - "LEVEL";  -- 값 반대로 바꾸기
+

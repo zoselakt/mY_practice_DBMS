@@ -1,0 +1,23 @@
+TCL (Transaction Control Language): DML을 위한 명령
+- 트랜젝션 제어 언어
+
+트랜젝션 : 하나의 작업단위
+- commit: 모든작업을 확정하는 명령어
+- rollback: 이전 커밋한 지점으로 이동
+
+TRUNCATE는 테이블 내용을 전체 삭제하므로, 대용량 데이터 처리에 유리하다.
+하지만 복구가 불가능하기 때문에 DELETE를 이용한다.
+
+
+AS(ALIAS) : 별칭
+ -SELECT절: AS 뒤에 별칭 작성, 한 칸 띄우고 작성 A B
+ -FROM절: 한칸 띄우고 작성
+
+--SELECT
+SELECT PLAYER_ID AS "선수 번호" FROM PLAYER; --공백이 있을시 쌍따옴표
+SELECT PLAYER_ID "선수 번호", PLAYER_NAME AS "선수 이름" FROM PLAYER;
+
+-FROM
+--SELECT TEAM_ID, TEAM_ID FROM PLAYER, TEAM; -- 오류
+SELECT PLAYER.TEAM_ID, TEAM.TEAM_ID FROM PLAYER, TEAM; --잘쓰지않음.
+SELECT P.TEAM_ID "선수 테이블", T.TEAM_ID FROM PLAYER P, TEAM T; --AS사용
