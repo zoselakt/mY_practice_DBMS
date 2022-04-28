@@ -1,0 +1,28 @@
+프로시저(procedure)
+- 특정한 로직을 처리하기만 하고 결과 값을 반환하지 않는 서브프로그램.
+테이블에서 데이터를 추출해 조작하고 그 결과를 다른 테이블에 다시 저장하거나 갱신하는
+일련의 처리를 할 때 주로 사용한다.
+
+CREATE OR REPLACE PROCEDURE 프로시저의이름
+(
+매개변수1	IN(생략O)		데이터 타입: =타입,
+매개변수2	IN(생략O)		데이터 타입 % TYPE
+)
+
+IS  :함수내에서 사용할 변수, 상수등 선언
+BEGIN: 실행할 문장
+END;
+
+CALL 프로시저의 이름(값1, 값2) 
+
+PL/SQL문(IF문)
+1. IF 조건 THEN 실행문;
+   END IF;
+2. IF 조건 THEN 실행문;
+   ELSIF 조건 THEN 실행문;
+   ...
+   ELSE 실행문
+   END IF;
+3. IF조건 THEN 실행문;
+   ELSE 실행문;
+   END IF;

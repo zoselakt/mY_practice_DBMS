@@ -1,0 +1,114 @@
+SQL문
+- DDL(Data Definition Language): 데이터 정의어 / 테이블 조작, 제어 관련 쿼리문
+	1. CREATE: 테이블 생성
+	2. DROP: 테이블 삭제 (복구도 되지 않는다... 쓰지마라....)
+	3. ALTER: 테이블 수정 []내용은 직접작성(?)
+		- 테이블명 수정 : RENAME TO [새로운 테이블명]
+		- 컬럼추가 :  ADD([새로운 컬럼명] [컬럼타입])
+		- 컬럼명 변경: RENAME COLUMN [생성된 컬럼명] TO [새로운 컬럼명]
+		- 컬럼 삭제: DROP COLUMN [생성된 컬럼명]
+	4. TRUNCATE: 테이블 내용 전체 삭제
+
+자료형(TYPE)
+숫자 (크기의 대한 내용은 보통은 작성되어 있고, 가져와서 사용하면 된다.)
+NUMBER(precision)  : 정수
+NUMBER(precision, 소수점 자리수)  : 실수
+NUMBER: 생략 시 22byte까지 입력 가능 (38자리 정수)
+
+문자열
+CHAR(길이): 고정형, 빈자리는 공백으로 채워짐 / 주민등록번호처럼 글자 수가 절대 변하지 않는 값을 넣는다.
+VARCHAR(길이 / 사용x), VARCHAR2(길이): 가변형, 값의 길이만큼 공간이 배정된다. / 글자 수가 변화가 있는 값을 넣는다.
+DATE: 년월일
+-------------------------------------------------------------------------------------------------------------------------
+- DML(Data Manipulation Language)
+-SELECT:조회(검색) 
+	SELECT컬럼명1, 컬럼명N FROM테이블명
+	WHERE 조건식;
+-INSERT: 추가
+	INSERT INTO 테이블명
+	(컬럼명1 ~~)
+	VALUES(값1 ~~)
+	INSERT INTO 테이블명 VALUES(값1 ~~)
+-UPDATE:수정
+	UPDATE 테이블명
+	SET 기존컬럼명 = 새로운값
+	WHERE 조건식
+-DELETE:삭제
+	DELETE FROM 테이블명
+	WHERE 조건식; (하나의 행모두가 삭제된다)
+
+WHERE 조건식:
+- > ,< : 초과, 미만
+- >=, <=: 이상, 이하
+- = : 같다
+- <> , !=, ^= :같지 않다.
+- AND: 두 조건식 모두 참이면 참
+- OR: 두 조건식 중 하나라도 참이면 참
+
+DELETE와 TRUNCATE
+--DELETE는 복구가 가능하다.
+--TRUNCATE는 복구가 불가능하다.
+-------------------------------------------------------------------------------------------------------------------------
+TCL (Transaction Control Language): DML을 위한 명령
+- 트랜젝션 제어 언어
+
+트랜젝션 : 하나의 작업단위
+- commit: 모든작업을 확정하는 명령어
+- rollback: 이전 커밋한 지점으로 이동
+
+TRUNCATE는 테이블 내용을 전체 삭제하므로, 대용량 데이터 처리에 유리하다.
+하지만 복구가 불가능하기 때문에 DELETE를 이용한다.
+
+
+AS(ALIAS) : 별칭
+ -SELECT절: AS 뒤에 별칭 작성, 한 칸 띄우고 작성 A B
+ -FROM절: 한칸 띄우고 작성
+
+--SELECT
+SELECT PLAYER_ID AS "선수 번호" FROM PLAYER; --공백이 있을시 쌍따옴표
+SELECT PLAYER_ID "선수 번호", PLAYER_NAME AS "선수 이름" FROM PLAYER;
+
+-FROM
+--SELECT TEAM_ID, TEAM_ID FROM PLAYER, TEAM; -- 오류
+SELECT PLAYER.TEAM_ID, TEAM.TEAM_ID FROM PLAYER, TEAM; --잘쓰지않음.
+SELECT P.TEAM_ID "선수 테이블", T.TEAM_ID FROM PLAYER P, TEAM T; --AS사용
+-----------------------------------------------------------------------------------------------------------------------------
+DCL (Data Control Language) 
+데이터 제어어 / 데이터 무결성, 보안, 권한 제어, 회복 등 수행하기 위한 DBMS 제어 수행 언어
+순서
+계정생성 -> 테이블 스페이스 -> 기본계정과 연동 -> 권한 부여 -> 권한 DDL, DCL 등 사용
+
+-GRANT: 데이터베이스 사용자에게 특정 작업에 대한 수행 권한 부여할 수 있는 권한 / 권한 부여
+권한부여
+GRANT [권한] ON [DB].[TABLE] TO [유저_ID]@[호스트];
+
+사용자 등록 및 권한부여
+GRANT [권한] ON [DB].[TABLE] TO [유저_ID]@[호스트] IDENTIFIED BY '비밀번호';
+
+권한 확인
+SHOW GRANTS FOR [유저_ID]@[호스트];
+
+-REVOKE: 데이터베이스 사용자에게 특정 작업에 대한 수행 권한을 박탈, 회수할 수 있는 권한 / 권한 박탈
+REVOKE [권한] ON [DB].[TABLE] FROM [유저_ID]@[호스트]
+
+- COMMIT: 트랜잭션의 작업이 정상적으로 완료할 수 있는 권한 / 데이터베이스의 작업한 결과를 물리적 디스크로 저장하고, 작업이 정상적으로 완료시키는 명령어이다.
+COMMIT;
+
+-ROLLBACK 트랜잭션의 작업이 비정상적으로 종료되었을 때 원래의 상태로 복구할 수 있는 권한 / COMMIT 명령어를 사용하기 이전의 상태만 ROLLBACK 가능
+ROLLBACK;
+
+ROLE: 권한이 뭉쳐있는 상태 / 한번에 여러권한부여
+CONNECT, RESOURCE, DBA
+GRANT 권한명(ROLE이름), 권한명2 ... TO 계정명
+GRANT SELECT ON PLAYER TO 받을계정명;
+
+REVOKE 권한명(ROLE이름) FROM 계정명
+
+SCOTT 계정 SALGRADE테이블을 복사한후 GRADE 컬럼명을 LEVEL 로 변경, 값을 반대로 바꾸기
+CREATE TABLE SALGRADE AS SELECT * FROM SCOTT.SALGRADE;  -- SCOTT계정 SALGRADE 테이블
+SELECT * FROM SALGRADE;
+
+ALTER TABLE SALGRADE RENAME COLUMN GRADE TO "LEVEL";  -- 컬럼명 변경
+UPDATE SALGRADE
+SET "LEVEL" = 6  - "LEVEL";  -- 값 반대로 바꾸기
+
