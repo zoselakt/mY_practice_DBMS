@@ -1,0 +1,162 @@
+--숫자형 함수(DUAL)
+--절대값
+SELECT ABS(-10)FROM DUAL;
+
+--양의 정수(1), 숫자 0, 음의정수(-1)판단
+SELECT SIGN(-234), SIGN(0) SIGN(123) FROM DUAL;
+
+--나머지(% 모듈러스)
+SELECT MOD(10, 3) FROM DUAL;
+
+--값보다 큰 최근접 정수
+SELECT CEIL(3.14), CEIL(-3.14) FROM DUAL;
+
+--값보다 작은 최근접 정수
+SELECT FLOOR(3.14), FLOOR(-3.14) FROM DUAL;
+
+--반올림 (정수타입으로 반환)
+SELECT ROUND(3.55875987) FROM DUAL; -- 정수타입으로 출력
+SELECT ROUND(3.55875987 1) FROM DUAL; -- 소수점 1자리까지 출력
+
+--버림
+SELECT TRUNC(3.9) FROM DUAL;
+
+-- PLAYER TABLE에서 키는 소수점 둘째자리까지 반올림, 몸무게는 소수점 버림
+SELECT ROUND(HEIGHT,2) || 'cm' AS 키, TRUNC(WEIGHT) || 몸무게 FROM PLAYER;
+
+-----------------------------------------------------------------------------------------------------------------------------
+
+집계함수: 여러개의 값을 하나의 값으로 집계하여 나타낸다.
+-- WHERE절에서는 사용할 수 없다. / NULL은 포함하지 않는다.
+-- AVG(): 평균 / MAX(): 최대값 / MIN(): 최소값 / SUM(): 총 합 /COUNT(): 갯수
+
+
+SELECT AVG(HEIGHT), MAX(HEIGHT), MIN(HEIGHT), SUM(HEIGHT), COINT(HEIGHT) FROM PLAYER;
+
+--PLAYER 테이블에서 HEIGHT갯수검색(NULL 포함해서 COUNT검색)
+SELECT COUNT (HEIGHT) FROM PLAYER; --NULL포함하지 않고 검색
+SELECT * FROM PLAYER;
+
+SELECT COUNT (NVL(HEIGHT, 0)) FROM PLAYER; -- NULL을 포함하고 검색
+-------------------------------------------------------------------------------
+
+ORDER BY (정렬)
+-- ASC: 오름차순
+-- DESC: 내림차순
+
+
+SELECT * FROM PLAYER ORDER BY HEIGHT; --기본적으로 오름차순
+SELECT * FROM PLAYER ORDER BY HEIGHT DESC; --내림차순
+SELECT * FROM PLAYER ORDER BY 12 DESC; --12번째 컬럼을 내림차순으로 정렬
+
+-- PLAYER 테이블에서 키 순, 몸무게 순(오름차순)으로 검색 / NULL이 아닌값만 검색 / 첫번째 컬럼 값이 같으면 두번째 정렬을 한다.
+SELECT PLAYER_NAME, HEIGHT, WEIGHT FROM PLAYER WHERE HEIGHT IS NOT NULL AND WEIGHT IS NOT NULL ORDER BY 2, 3;
+-------------------------------------------------------------------------------
+
+ CASE문
+-- CASE WHEN:
+-- CASE THEN:
+-- CASE ELSE:
+-- CASE END:
+-- CASE WHEN 조건식 THEN '참 값' ELSE '거짓 값' END
+
+
+-- EMP 테이블에서 SAL 3000이상이면 HIGH 1000이상이면 MID, 다 아니면 LOW
+SELECT * FROM EMP;
+SELECT ENAME 사원명, SAL 급여,
+	CASE 
+		WHEN SAL >= 3000 THEN 'HIGH'
+		WHEN SAL >= 1000 THEN 'MID'
+		ELSE 'LOW'
+	END
+FROM EMP;
+
+--STADIUM 테이블에서 SEAT_COUNT가 0 이상 30000이하면 'S' 30001이상 50000이하면 'M' 다 아니면 'L'
+--중첩케이스문
+SELECT STADIUM_NAME 경기장, SEAT_COUNT 좌석수, 
+	CASE
+		WHEN SEAT_COUNT BETWEEN 0 AND 30000 THEN 'S'
+		ELSE
+			(
+			CASE 
+				WHEN SEAT_COUNT BETWEEN 30001 AND 50000 THEN 'M'
+				ELSE 'L'
+				END
+			)
+		END
+FROM STADIUM;		
+		
+--PLAYER 테이블에서 WEIGHT가 50이상 70이하면 'L'
+--71이상 80이하면 'M' NULL이면 '미등록' 다 아니면 'H'
+SELECT PLAYER_NAME 선수이름, WEIGHT || 'kg' 몸무게,
+	CASE
+		WHEN WEIGHT BETWEEN 50 AND 70 THEN 'L'
+		WHEN WEIGHT BETWEEN 71 AND 80 THEN 'M'
+		ELSE
+		(
+		CASE WHEN WEIGHT IS NULL THEN '미등록'
+		ELSE 'H'
+		END
+		)
+	END 체급
+FROM PLAYER;
+---------------------------------------------------------------------------------------------------------------------------
+
+GROUP BY: ~별(예: 포지션 별 평균키 불러오기)
+--SELECT ??? FROM ???
+--WHERE 조건식
+--GROUP BY 컬럼명
+--HAVING 조건식 
+
+
+--PLATER 테이블에서 포지션 검색
+SELECT "POSITION" FROM PLAYER
+GROUP BY "POSITION"
+HAVING "POSITION" IS NOT NULL;
+
+--WHERE절에서 조건을 처리할수 있다면 반드시 WHERE절에서 먼저 처리해준다.
+SELECT "POSITION" FROM PLAYER
+WHERE "POSITION" IS NOT NULL
+GROUP BY "POSITION";
+
+--PLAYER 테이블에서 몸무게가 80이상인 선수들의 평균 키가 180이상인 포지션 검색
+-- SELECT * FROM PLAYER -- *는 모두 불러오는 것으로 POSITION 뿐만아니라 NAME 등 다른것도 포함되어 포지션에 그룹화할수 없다.
+SELECT "POSITION", AVG(HEIGHT), MIN(WEIGHT) FROM PLAYER
+WHERE WEIGHT >= 80 
+GROUP BY "POSITION"
+HAVING AVG(HEIGHT) >= 180;
+--------------------------------------------------------------------------------------------------------------------
+SUB QUERY
+--FROM절 : IN LINE VIEW
+--SELECT절 : SCALAR
+--WHERE절 : SUB QUERY
+
+
+--PLAYER 테이블에서 TEAM_ID가 'K01' 인 선수 중 POSITION 이 GK인 선수
+SELECT * FROM 
+(
+	SELECT * FROM PLAYER WHERE TEAM_ID = 'K01'
+)
+WHERE "POSITION" = 'GK';
+
+--PLAYER 테이블에서 평균 키보다 작은 선수 검색 / WHERE절에서 사용
+SELECT AVG(HEIGHT) FROM PLAYER; -- 평균 값: 179.3 
+SELECT * FROM PLAYER
+WHERE HEIGHT < (SELECT AVG(HEIGHT)FROM PLAYER);
+
+-- PLAYER 테이블에서 전체평균 키와 포지션별 평균 키 구하기
+SELECT "POSITION", AVG(HEIGHT), (SELECT AVG(HEIGHT) FROM PLAYER) FROM PLAYER
+WHERE "POSITION" IS NOT NULL
+GROUP BY "POSITION";
+
+-- CASE문으로 변경
+SELECT
+	ROUND(AVG(CASE "POSITION" WHEN 'GK' THEN HEIGHT END), 2) AS GK,
+	ROUND(AVG(CASE "POSITION" WHEN 'GK' THEN HEIGHT END), 2) AS DK,
+	AVG(CASE "POSITION" WHEN 'GK' THEN HEIGHT END) AS FW,
+	AVG(CASE "POSITION" WHEN 'GK' THEN HEIGHT END) AS MF,
+	AVG(HEIGHT) AS "전체 평균"
+FROM PLAYER;
+
+
+
