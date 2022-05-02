@@ -1,30 +1,34 @@
---PLAYER Å×ÀÌºí ¿¡¼­ TEAM_ID °¡ 'K01' ÀÎ ¼±¼ö ÀÌ¸§À» ³» ÀÌ¸§À¸·Î ¹Ù²Ù±â
-UPDATE PLAYER SET PLAYER_NAME = 'ÇÑµ¿¼®' WHERE TEAM_ID = 'K01';
+--DML ì—°ìŠµ
+--PLAYER í…Œì´ë¸” ì—ì„œ TEAM_ID ê°€ 'K01' ì¸ ì„ ìˆ˜ ì´ë¦„ì„ ë‚´ ì´ë¦„ìœ¼ë¡œ ë°”ê¾¸ê¸°
+UPDATE PLAYER SET PLAYER_NAME = 'í•œë™ì„' WHERE TEAM_ID = 'K01';
 
 SELECT * FROM PLAYER
 WHERE TEAM_ID = 'K01';
 
---PLAYER Å×ÀÌºí¿¡¼­ POSITIONÀÌ MFÀÎ ¼±¼ö »èÁ¦ÇÏ±â
+--PLAYER í…Œì´ë¸”ì—ì„œ POSITIONì´ MFì¸ ì„ ìˆ˜ ì‚­ì œí•˜ê¸°
 DELETE FROM PLAYER WHERE "POSITION" = 'MF'; 
 
 SELECT * FROM PLAYER WHERE "POSITION" = 'MF';
 
---PLAYER Å×ÀÌºí¿¡¼­ HEIGHT°¡ 180ÀÌ»óÀÎ ¼±¼ö »èÁ¦ÇÏ±â
+--PLAYER í…Œì´ë¸”ì—ì„œ HEIGHTê°€ 180ì´ìƒì¸ ì„ ìˆ˜ ì‚­ì œí•˜ê¸°
 DELETE FROM PLAYER WHERE HEIGHT >= 180;
 
 SELECT * FROM PLAYER WHERE HEIGHT >= 180;
+---------------------------------------------------------------------------------------------------------------
+-- TCL
+-- DCL(Data Control Language)ì—ì„œ íŠ¸ëžœìž­ì…˜ì„ ì œì–´í•˜ëŠ” ëª…ë ¹ì¸ COMMITê³¼ ROLLBACKë§Œì„ ë”°ë¡œ ë¶„ë¦¬í•´ì„œ TCLì´ë¼ê³  í‘œí˜„í•˜ê³  ìžˆìŠµë‹ˆë‹¤.
 
---AS(ALIAS) : º°Äª
--- -SELECTÀý: AS µÚ¿¡ º°Äª ÀÛ¼º, ÇÑ Ä­ ¶ç¿ì°í ÀÛ¼º A B
--- -FROMÀý: ÇÑÄ­ ¶ç¿ì°í ÀÛ¼º
-SELECT PLAYER_ID AS "¼±¼ö ¹øÈ£" FROM PLAYER; --°ø¹éÀÌ ÀÖÀ»½Ã ½Öµû¿ÈÇ¥
-SELECT PLAYER_ID "¼±¼ö ¹øÈ£" FROM PLAYER;
-SELECT PLAYER_ID "¼±¼ö ¹øÈ£", PLAYER_NAME AS "¼±¼ö ÀÌ¸§" FROM PLAYER;
+--AS(ALIAS) : ë³„ì¹­
+-- -SELECTì ˆ: AS ë’¤ì— ë³„ì¹­ ìž‘ì„±, í•œ ì¹¸ ë„ìš°ê³  ìž‘ì„± A B
+-- -FROMì ˆ: í•œì¹¸ ë„ìš°ê³  ìž‘ì„±
+SELECT PLAYER_ID AS "ì„ ìˆ˜ ë²ˆí˜¸" FROM PLAYER; --ê³µë°±ì´ ìžˆì„ì‹œ ìŒë”°ì˜´í‘œ
+SELECT PLAYER_ID "ì„ ìˆ˜ ë²ˆí˜¸" FROM PLAYER;
+SELECT PLAYER_ID "ì„ ìˆ˜ ë²ˆí˜¸", PLAYER_NAME AS "ì„ ìˆ˜ ì´ë¦„" FROM PLAYER;
 
---PLAYERÅ×ÀÌºí¿¡¼­ BACK_NUMÀ» "µî ¹øÈ£"·Î, NICKNAMEÀ» "¼±¼ö º°¸í"À¸·Î ¹Ù²ã¼­ °Ë»ö
-SELECT BACK_NO AS "µî ¹øÈ£", NICKNAME "¼±¼ö º°¸í" FROM PLAYER;
+--PLAYERí…Œì´ë¸”ì—ì„œ BACK_NUMì„ "ë“± ë²ˆí˜¸"ë¡œ, NICKNAMEì„ "ì„ ìˆ˜ ë³„ëª…"ìœ¼ë¡œ ë°”ê¿”ì„œ ê²€ìƒ‰
+SELECT BACK_NO AS "ë“± ë²ˆí˜¸", NICKNAME "ì„ ìˆ˜ ë³„ëª…" FROM PLAYER;
 
---FROMÀý
---SELECT TEAM_ID, TEAM_ID FROM PLAYER, TEAM; -- ¿À·ù
-SELECT PLAYER.TEAM_ID, TEAM.TEAM_ID FROM PLAYER, TEAM; --Àß¾²Áö¾ÊÀ½.
-SELECT P.TEAM_ID "¼±¼ö Å×ÀÌºí", T.TEAM_ID FROM PLAYER P, TEAM T; --AS»ç¿ë
+--FROMì ˆ
+--SELECT TEAM_ID, TEAM_ID FROM PLAYER, TEAM; -- ì˜¤ë¥˜
+SELECT PLAYER.TEAM_ID, TEAM.TEAM_ID FROM PLAYER, TEAM; --ìž˜ì“°ì§€ì•ŠìŒ.
+SELECT P.TEAM_ID "ì„ ìˆ˜ í…Œì´ë¸”", T.TEAM_ID FROM PLAYER P, TEAM T; --ASì‚¬ìš©
