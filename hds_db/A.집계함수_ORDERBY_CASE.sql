@@ -27,7 +27,12 @@ SELECT PLAYER_NAME, HEIGHT, WEIGHT FROM PLAYER WHERE HEIGHT IS NOT NULL AND WEIG
 -- CASE ELSE:
 -- CASE END:
 -- CASE WHEN 조건식 THEN '참 값' ELSE '거짓 값' END
-
+/*
+WHEN - THEN은 항상 같이 사용 되어야 한다.
+WHEN - THEN은 여러개 사용이 가능하다.
+ELSE가 존재하면 모든 WHEN - THEN 조건이 TRUE(참)이 아닌 경우 ELSE의 결과값을 반환한다. 
+ELSE가 없고, 조건이 TRUE(참)이 아니면 NULL을 반환한다.
+*/
 -- EMP 테이블에서 SAL 3000이상이면 HIGH 1000이상이면 MID, 다 아니면 LOW
 SELECT * FROM EMP;
 SELECT ENAME 사원명, SAL 급여,
