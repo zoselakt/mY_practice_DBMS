@@ -22,11 +22,7 @@ SELECT * FROM PLAYER ORDER BY 12 DESC; --12번째 컬럼을 내림차순으로 �
 SELECT PLAYER_NAME, HEIGHT, WEIGHT FROM PLAYER WHERE HEIGHT IS NOT NULL AND WEIGHT IS NOT NULL ORDER BY 2, 3; --2번 주 정렬
 -------------------------------------------------------------------------------
 -- CASE문
--- CASE WHEN:
--- CASE THEN:
--- CASE ELSE:
--- CASE END:
--- CASE WHEN 조건식 THEN '참 값' ELSE '거짓 값' END
+-- CASE(시작) WHEN 조건식 THEN '참 값'(결과값) ELSE '거짓 값'(결과값) END(끝)
 /*
 WHEN - THEN은 항상 같이 사용 되어야 한다.
 WHEN - THEN은 여러개 사용이 가능하다.
