@@ -18,7 +18,7 @@ SELECT * FROM PLAYER ORDER BY HEIGHT; --기본적으로 오름차순
 SELECT * FROM PLAYER ORDER BY HEIGHT DESC; --내림차순
 SELECT * FROM PLAYER ORDER BY 12 DESC; --12번째 컬럼을 내림차순으로 정렬
 
--- PLAYER 테이블에서 키 순, 몸무게 순(오름차순)으로 검색 / NULL이 아닌값만 검색 / 첫번째 컬럼 값이 같으면 두번째 정렬을 한다.
+-- PLAYER 테이블에서 키 순, 몸무게 순(오름차순)으로 검색 / NULL이 아닌값만 검색 / select한 컬럼2, 3을 기준으로 
 SELECT PLAYER_NAME, HEIGHT, WEIGHT FROM PLAYER WHERE HEIGHT IS NOT NULL AND WEIGHT IS NOT NULL ORDER BY 2, 3;
 -------------------------------------------------------------------------------
 -- CASE문
