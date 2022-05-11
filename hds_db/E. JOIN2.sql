@@ -59,3 +59,11 @@ ON HOMETEAM_ID = TEAM_ID;
 
 SELECT E1.ENAME 사원, E2.ENAME 매니저 FROM EMP E1 JOIN EMP E2
 ON E1.MGR = E2.EMPNO;
+
+-- 크로스 조인(CROSS JOIN)
+-- 모든 경우의 수를 전부 표현해주는 방식의 조인문이다. 기준테이블이 왼쪽일 경우 왼쪽의 데이터 한 Row를 오른쪽 테이블 전체와 JOIN하는 방식. 따라서 결과값의 개수도 N(왼쪽 테이블의 개수)*M(오른쪽 테이블의 개수)다.
+
+-- 기본 문법
+--SELECT 테이블별칭.조회할컬럼, 테이블별칭.조회할컬럼
+--FROM 기준테이블 별칭
+--CROSS JOIN 조인테이블 별칭
