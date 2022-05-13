@@ -14,41 +14,18 @@
          -- 모든 경우의 수를 전부 표현해주는 방식의 조인문이다. 기준테이블이 왼쪽일 경우 왼쪽의 데이터 한 Row를 오른쪽 테이블 전체와 JOIN하는 방식. 따라서 결과값의 개수도 N(왼쪽 테이블의 개수)*M(오른쪽 테이블의 개수)다.
       
 -- 2. OUTER JOIN(외부 조인)은 두 테이블을 조인할 때, 1개의 테이블에만 데이터가 있어도 결과가 나온다. /-- 두개의 테이블 중 조건이 거짓이라도 지정한 테이블의 모든 정보가 검색되어야 할 때 사용한다 
-      조건에 맞지 않아도 해당하는 행을 출력하고 싶을 때 사용할 수 있습니다.
+      -- 조건에 맞지 않아도 해당하는 행을 출력하고 싶을 때 사용할 수 있습니다.
       -- LEFT OUTER JOIN: 왼쪽 테이블의 모든 값이 출력되는 조인
       -- RIGHT OUTER JOIN: 오른쪽 테이블의 모든 값이 출력되는 조인
       -- FULL OUTER JOIN: 왼쪽 또는 오른쪽 테이블의 모든 값이 출력되는 조인
 
---내츄럴 조인(NATURAL JOIN)
 
+--내츄럴 조인(NATURAL JOIN)
 SELECT * FROM EMP E NATURAL JOIN DEPT D;
 
 --네츄럴 조인 - USING절
 --자연 조인에서 사용하는 테이블간에 동일한 이름과 형식의 컬럼이 둘 이상인 경우 자연 조인을 사용할 수 없다.
 --이럴 경우 USING 절을 이용한 조인문을 이용하면 조인문을 구사할 수 있다.
-
---방법1
-SELECT * FROM EMP INNER JOIN DEPT
-ON EMP.DEPTNO = DEPT.DEPTNO;
---방법2
-SELECT * FROM EMP INNER JOIN DEPT
-USING(DEPTNO);
-
---외부조인(OUTER JOIN)
-
-SELECT * FROM STADIUM;
-SELECT * FROM TEAM;
-
---LEFT OUTER JOIN
-SELECT * FROM STADIUM LEFT OUTER JOIN TEAM
-ON HOMETEAM_ID = TEAM_ID;
-
---RIGHT OUTER JOIN
-SELECT * FROM STADIUM RIGHT OUTER JOIN TEAM
-ON HOMETEAM_ID = TEAM_ID;
---FULL OUTER JOIN
-SELECT * FROM STADIUM FULL OUTER JOIN TEAM
-ON HOMETEAM_ID = TEAM_ID;
 
 --셀프조인(SELF JOIN)
 
@@ -65,3 +42,26 @@ ON E1.MGR = E2.EMPNO;
 --SELECT 테이블별칭.조회할컬럼, 테이블별칭.조회할컬럼
 --FROM 기준테이블 별칭
 --CROSS JOIN 조인테이블 별칭
+
+
+--방법1
+SELECT * FROM EMP INNER JOIN DEPT
+ON EMP.DEPTNO = DEPT.DEPTNO;
+--방법2
+SELECT * FROM EMP INNER JOIN DEPT
+USING(DEPTNO);
+
+--외부조인(OUTER JOIN)
+SELECT * FROM STADIUM;
+SELECT * FROM TEAM;
+
+--LEFT OUTER JOIN
+SELECT * FROM STADIUM LEFT OUTER JOIN TEAM
+ON HOMETEAM_ID = TEAM_ID;
+
+--RIGHT OUTER JOIN
+SELECT * FROM STADIUM RIGHT OUTER JOIN TEAM
+ON HOMETEAM_ID = TEAM_ID;
+--FULL OUTER JOIN
+SELECT * FROM STADIUM FULL OUTER JOIN TEAM
+ON HOMETEAM_ID = TEAM_ID;
