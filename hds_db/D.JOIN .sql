@@ -28,8 +28,9 @@ SELECT * FROM
 SALGRADE S JOIN EMP E
 ON E.SAL BETWEEN S.LOSAL AND S.HISAL; -- =없으면: 비등가조인
 
-
 --방법1
+--ON : JOIN 을 하기 전 필터링을 한다 
+--     null 포함 된 대상에 대해 null이 아닌 대상으로 필터링 / ON 조건에 아닌 데이터도 조회한다
 SELECT E.EMPNO, D.DNAME, E.ENAME, S.GRADE, E.SAL FROM
 SALGRADE S JOIN EMP EMP
 ON E.SAL BETWEEN S.LOSAL AND S.HISAL
@@ -37,6 +38,9 @@ JOIN DEPT D
 ON E.DEPTNO = D.DEPTNO;
 
 --방법2
+--WHERE : JOIN 을 한 후 필터링을 한다 (=JOIN을 한 결과에서 WHERE 조건절로 필터링이 이뤄진다)
+--        필터링 후 outer join결과 null 출력 가능 / WHERE 조건에 해당하는 데이터를 추출
+--        WHERE 절은 가져온 테이블에서 조건에 맞는 값을 가져오는 검색 조건으로 사용
 SELECT E.EMPNO, D.DNAME, E.ENAME, S.GRADE, E.SAL FROM
 SALGRADE S, EMP E, DEPT D
 WHERE E.SAL BETWEEN S.LOSAL AND S.HISAL AND E.DEPTNO = D.DEPTNO;
