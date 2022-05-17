@@ -16,6 +16,12 @@ ON P.TEAM_ID = T.TEAM_ID AND P.PLAYER_NAME = '송종국';
 SELECT * FROM JOBS;
 SELECT * FROM EMPLOYEES;
 
+--등가조인(equi join)
+-- - 일반적으로 가장많이 사용되는 방식으로 테이블을 연결한 후 출력 행을 각 테이블의 특정 열에 일치한 데이터를 기준으로 조인하는 방식.
+--   테이블간의 공통 컬럼을 활용하여 각 테이블의 특정 컬럼에 일치한 데이터를 기준으로 연결하는 방법
+--비등가조인(non-equi join) 
+-- - 테이블간의 컬럼 값들이 정확하게 일치하지 않을 경우 사용하는 방법 / 조건이 여러개인 경우 AND사용가능
+
 SELECT J.JOB_ID, J.JOB_TITLE, E.EMAIL, E.LAST_NAME ||' ' || E.FIRST_NAME
 FROM JOBS J JOIN EMPLOYEES E
 ON J.JOB_ID = E.JOB_ID; -- =있으면: 등가조인
