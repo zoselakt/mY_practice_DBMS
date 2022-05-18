@@ -21,21 +21,25 @@
 --최소의 부담만 주고 대부분의 로직은 WAS에서 처리할 수 있게 합니다.
 
 --선언
---CREATE PROCEDURE 프로시저_명 ( 파라미터_명 MODE 데이터_타입 ) 
---IS 변수 선언 
---CREATE OR REPLACE PROCEDURE 프로시저_명 ( 파라미터_명 MODE 데이터_타입 ) 
---AS 변수 선언
+--CREATE PROCEDURE 프로시저_명 ( 파라미터1, 파라미터2 MODE 데이터_타입 ) 
+--IS  (또는 AS)
+--BEGIN
+--END
 
 --MODE
 --1. IN(프로시저로 값 전달)
 --2. OUT(프로시저에서 처리된 결과)
 --3. INOUT(IN과 OUT의 두 가지 기능을 모두 수행)
 
---IS/AS 
+--IS (AS) 
 --- PL/SQL 의 블록을 시작 / IS 또는 AS 를 작성
+
+--BEGIN
+-- 쿼리문 또는 실행할 문장작성
 
 --프로시저 호출
 --EXECUTE 프로시저_명(파라미터_명1, 파라미터_명2, ...);
+--CALL 프로시저명(파라미터) :
 */
 
 BEGIN
@@ -52,7 +56,7 @@ BEGIN  // 프로시저 시작
 	DBMS_OUTPUT.PUT_LINE(2*X+1);
 END;  //프로시저 종료
 
-CALL F(2); -- 출력: 5
+CALL F(2); -- 출력: 5ㄴ
 
 -----------------------------------------------------
 --JOBS 테이블에 INSERT해주는 함수 만들기
@@ -63,12 +67,12 @@ CREATE OR REPLACE PROCEDURE MY_NEW_JOB_PROC
 	P_JOB_ID IN JOBS.JOB_ID%TYPE,
 	P_JOB_TITLE IN JOBS.JOB_TITLE%TYPE,
 	P_MIN_SALARY IN JOBS.MIN_SALARY%TYPE,
-	P_MAN_SALARY IN JOBS.MAN_SALARY%TYPE
+	P_MAN_SALARY IN JOBS.MAX_SALARY%TYPE
 )
 IS
 BEGIN
 	INSERT INTO JOBS(JOB_ID, JOB_TITLE, MIN_SALARY, MAX_SALARY)
-	VALUES(P_JOB_ID, P_JOB_TITLE, P_MIN_SALARY, P_MAN_SALARY);
+	VALUES(P_JOB_ID, P_JOB_TITLE, P_MIN_SALARY, P_MAX_SALARY);
 	DBMS_OUTPUT.ENABLE;
 	DBMS_OUTPUT.PUT_LINE('ALL DONE ABOUT' ||' '||P_JOB_ID);
 END;
